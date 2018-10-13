@@ -1,0 +1,29 @@
+<script>
+
+    function topFun(string){
+        this.test33=3;
+        return string;
+    }
+    let test2 = new topFun('2');
+    topFun.prototype.test = "1";
+    console.log(test2.test); //1 test2에는test객체가 없기때문에 윗 객체인 topFun prototype의 test를 사용한다.(class의상속처럼)
+    test2.test = "5";
+    console.log(test2.test); //5
+    console.log(test2.test33); //3
+
+    topFun.prototype.prototype2 = String.prototype
+    topFun.prototype3 = String.prototype;
+    console.log(test2.prototype2) //String의 prototype을 topFun.prototype3이 가지게됨
+    console.log(test2.prototype3) //undefined가 뜸. 왜냐하면 prototype은 함수에만 있는것이니까.
+
+    //그렇다면 test2에서 바로 string.prototype을 바인딩하고싶은데 어떻게 하는가..
+    test2.prototype3 = Object.create(String.prototype);  // prototype3에 object공간 할당후 string의 프로토타입 대입.
+    console.log(test2.prototype3) //string의 프로토타입 할당 성공 __proto__로 link된 상태.
+
+    test="1/2/3";
+    String.prototype.foo = String.prototype.split;
+    splitTest = test.foo("/");
+    console.log(splitTest);//["1","2","3"]
+
+
+</script>
