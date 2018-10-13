@@ -27,6 +27,21 @@
     splitTest = test.foo("");
     console.log(splitTest);//["1","2","3"]
 
-    //이제 궁금한것은 A -> B가 상속되고 B->C를 상속할때 A,B를 다 가지고있는법을 공부해보자.
+    t = "";
+    Object.prototype.fooo = 14;
+    String.prototype.fooo = 12;
+
+    String.prototype.fooo2 = 120;
+    Object.prototype.fooo2 = 140;
+    
+    
+    console.log(t.fooo) //12
+    console.log(t.fooo2) //120
+    //둘다 String의 프로토타입을 가져옴.
+    console.log(Object.prototype.split) //undefind
+    //위 사항으로봐서 25번째 줄은 거짓이되고, Object가지는것 따로, String이 가지는것 따로이며, Object->String으로 덮어지며  형태에따라 Object->Number나 Object->String순으로 상속되는듯
+
+
+    //이제 궁금한것은 A -> B가 상속되고 B->C를 상속할때 C에서 A,B를 다 가지고있는법을 공부해보자. (js로 상속 원리 이해해보자)
 
 </script>
