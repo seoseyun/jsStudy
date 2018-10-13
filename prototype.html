@@ -20,10 +20,11 @@
     test2.prototype3 = Object.create(String.prototype);  // prototype3에 object공간 할당후 string의 프로토타입 대입.
     console.log(test2.prototype3) //string의 프로토타입 할당 성공 __proto__로 link된 상태.
 
-    test="1/2/3";
+    test=123;
     Object.prototype.foo = String.prototype.split;
-    //String.prototype.foo = String.prototype.split;은안됨. String->Object로 가면서 test가 Object와 링크되어있기때문인듯
-    splitTest = test.foo("/");
+    //String.prototype.foo = String.prototype.split;은안됨. 타입이 Number라서 String을참조조차 하지않음. 결국 String객체에서 Object로 객체를 넘기고 그 객체를 참조하는듯.
+    //(Object에서 Number든 String이든 다 가지고 있지 않다는증거)
+    splitTest = test.foo("");
     console.log(splitTest);//["1","2","3"]
 
     //이제 궁금한것은 A -> B가 상속되고 B->C를 상속할때 A,B를 다 가지고있는법을 공부해보자.
