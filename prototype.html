@@ -21,9 +21,11 @@
     console.log(test2.prototype3) //string의 프로토타입 할당 성공 __proto__로 link된 상태.
 
     test="1/2/3";
-    String.prototype.foo = String.prototype.split;
+    Object.prototype.foo = String.prototype.split;
+    //String.prototype.foo = String.prototype.split;은안됨. String->Object로 가면서 test가 Object와 링크되어있기때문인듯
     splitTest = test.foo("/");
     console.log(splitTest);//["1","2","3"]
 
+    //이제 궁금한것은 A -> B가 상속되고 B->C를 상속할때 A,B를 다 가지고있는법을 공부해보자.
 
 </script>
