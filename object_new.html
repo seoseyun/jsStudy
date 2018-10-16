@@ -1,0 +1,38 @@
+<script>
+    //new를 공부해보자!
+    //new는 function을 객체로 변화시키는 명령어!, 그럼 JAVA개념에서 컨스트럭은 어디서 쓰느냐! 그냥 코드로 쓰면된다!
+
+    //car라는 함수에 불과하다.
+    function car(){}
+    var sonata = new car();
+    console.log(sonata); //car Object 생성
+
+    function bike(maker){
+        this.wheel = 2 //일종의 컨스트럭단이라고 생각하면된다. 바깥에서 호출한다고 생각한다면 bike.wheel = 2 정도 되겠다.
+        this.position = 0;
+        //메소드
+        this.go = function(){
+            this.position += 1;
+        }
+        this.back = function(){
+            this.position -= 1;
+        }
+    }
+
+    //위에서 만든 bike함수를 기반으로 객체화 시키고 객체 콘솔을 찍어보자!
+    var honda = new bike();
+    console.log(honda); // 기본적으로 bike와 같은 객체를 생성했다!
+
+    //그렇다면 객체를두개 만들어서 따로 운영한다면 따로 관리가 될까?
+    var honda2 = new bike();
+
+    honda.go();
+    honda.go();
+    honda.go();
+    honda.go();
+    honda2.back();
+
+    console.log(honda); //position 이 4이다.
+    console.log(honda2); //position이 -1이다.
+    //이로써 따로객체가 운용됨을 알수 있었다.
+</script>
