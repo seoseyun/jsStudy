@@ -1,0 +1,81 @@
+<script>
+    //우선 this로 상속의상속에서 경험해보도록 하자
+    function Class(){
+        this.say = name => console.log(name+' said wow!');
+    }
+    A = new Class();
+    A.say('A'); //A said wow!
+
+    B = new Class();
+    B.say('B'); //B said wow!
+    B.say = name => console.log(name+' said sad...');
+    B.say('B'); //B said sad...
+    A.say('A'); //A said wow!
+    C = new Class();
+    C.say = name => console.log(name+' silence');
+    C.say('C'); //C silence
+    B.say('B'); //B said sad...
+    A.say('A'); //A said wow!
+    //위와 같이 각자노는것을 알수있다.
+
+    //그렇다면 prototype 에서 prototype chain을 사용해보자!
+    function Class2(){}
+    Class2.prototype.say = name => console.log(name+' shout wow!');
+    A2 = new Class2();
+    A2.say('A'); // A shout wow!
+
+    B2 = new Class2();
+    B2.say('B'); //B shout wow!
+    B2.say = name=>console.log(name+' shout woooow!');
+    B2.say('B'); //B shout woooow!
+    A2.say('A'); //A shout wow!
+    C2 = new Class2();
+    C2.say = name=>console.log(name+' shout sad..');
+    C2.say('C'); //C shout sad..
+    B2.say('B'); //B shout woooow!
+    A2.say('A'); //A shout wow!
+    //여기까진 똑같다. 본격적으로 prototype chain을 사용해보자!
+
+    org = new Class2();
+    C2.__proto__.say =  name=>console.log(name+' is change');
+    C2.say('C'); //C shout sad..
+    B2.say('B'); //B shout woooow!
+    A2.say('A'); //A is chang
+    org.say('org'); //org is chang
+
+    //이럴수가! __proto__ 로 say를 변경시켯더니, 프로토타입을 오버라이딩한 C2,B2는 그대로 사용되고있지만, 그대로 상속시킨 A2와 org는 바귄 'is change'로 바뀌었다!
+    //말그대로 chain 처럼 걸려오던것들이 모두 바뀌엇다!
+    //이체인을 new말고도 object로도 바로 가능하다!
+    const AA = {
+        say : ()=>console.log('AA'),
+        test : ()=>console.log('test')
+    }
+    const BB = {
+        __proto__ : AA,
+        say : ()=>console.log('BB')
+    }
+    const CC = {
+        __proto__ : BB,
+        say3 : ()=>console.log('CC')
+    }
+    const DD = {
+        __proto__:BB
+    }
+    BB.say(); //BB
+    CC.say3(); //CC
+    CC.say(); //BB
+    CC.__proto__.say = ()=>console.log('++');
+    AA.say(); //AA
+    BB.say(); //++
+    CC.say(); //++
+    DD.say(); //++
+
+    //위처럼C의 프로토를 수정하였더니 C의 프로토인 BB까지만 say가 수정되었고, AA는수정되지않았다. 
+    //이로 알수있는점은 바로 상속된 윗 프로토타입만 변경가능하고 조상까지는 변경이 불가능 하다는 점이다.
+
+    DD.test(); //test [줄줄이소세지처럼 상속이 내려오고, 내려온다.]
+    DD.__proto__.test = ()=>console.log('test222');
+    BB.test(); //test222
+    //아뉘이러면 AA까지 수정된게 된다.
+    //최종 결론은 맨 처음오는 프로토타입을 건든다는걸 알수있다!
+</script>
